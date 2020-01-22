@@ -486,6 +486,12 @@
   <data name="lblLambdaUploadURL.Text" xml:space="preserve">
     <value>Посилання:</value>
   </data>
+  <data name="lblTeknikExpiration.Text" xml:space="preserve">
+    <value>Термін дії:</value>
+  </data>
+  <data name="lblSeafileSharePassword.Text" xml:space="preserve">
+    <value>Пароль публікації:</value>
+  </data>
   <data name="lblSeafileDaysToExpire.Text" xml:space="preserve">
     <value>Днів до видалення:</value>
   </data>
@@ -512,6 +518,9 @@
   </data>
   <data name="txtSeafileUploadLocationRefresh.Text" xml:space="preserve">
     <value>Оновити</value>
+  </data>
+  <data name="lblSeafileSelectLibrary.Text" xml:space="preserve">
+    <value>Виберіть бібліотеку:</value>
   </data>
   <data name="btnRefreshSeafileAccInfo.Text" xml:space="preserve">
     <value>Оновити</value>
@@ -576,6 +585,9 @@
   <data name="lblSulAPIKey.Text" xml:space="preserve">
     <value>Ключ API:</value>
   </data>
+  <data name="btnLithiioFetchAPIKey.Text" xml:space="preserve">
+    <value>Отримати ключ API</value>
+  </data>
   <data name="lblLithiioPassword.Text" xml:space="preserve">
     <value>Пароль:</value>
   </data>
@@ -629,6 +641,15 @@
   </data>
   <data name="lblPlikUsername.Text" xml:space="preserve">
     <value>Ім’я користувача:</value>
+  </data>
+  <data name="gbPlikLoginCredentials.Text" xml:space="preserve">
+    <value>Дані для входу</value>
+  </data>
+  <data name="cbYouTubeUseShortenedLink.Text" xml:space="preserve">
+    <value>Скорочене посилання</value>
+  </data>
+  <data name="btnSharedFolderDuplicate.Text" xml:space="preserve">
+    <value>Дублювати</value>
   </data>
   <data name="btnSharedFolderRemove.Text" xml:space="preserve">
     <value>Вилучити</value>
@@ -726,6 +747,9 @@
   <data name="lblUpasteUserKey.Text" xml:space="preserve">
     <value>Ключ користувача:</value>
   </data>
+  <data name="lblHastebinSyntaxHighlighting.Text" xml:space="preserve">
+    <value>Підсвічування синтаксису:</value>
+  </data>
   <data name="lblHastebinCustomDomain.Text" xml:space="preserve">
     <value>Домен користувача:</value>
   </data>
@@ -813,6 +837,15 @@
   <data name="gbPhotobucketUserAccount.Text" xml:space="preserve">
     <value>Обліковий запис користувача</value>
   </data>
+  <data name="lblGooglePhotosCreateAlbumName.Text" xml:space="preserve">
+    <value>Назва альбому:</value>
+  </data>
+  <data name="btnGooglePhotosCreateAlbum.Text" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="cbGooglePhotosIsPublic.Text" xml:space="preserve">
+    <value>Публічне вивантаження</value>
+  </data>
   <data name="chPicasaID.Text" xml:space="preserve">
     <value>Ідентифікатор</value>
   </data>
@@ -833,6 +866,9 @@
   </data>
   <data name="cbCheveretoDirectURL.Text" xml:space="preserve">
     <value>Пряме посилання</value>
+  </data>
+  <data name="lblCheveretoUploadURL.Text" xml:space="preserve">
+    <value>Посилання вивантаження:</value>
   </data>
   <data name="lblCheveretoAPIKey.Text" xml:space="preserve">
     <value>Ключ API:</value>
