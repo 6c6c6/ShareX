@@ -268,7 +268,7 @@
     <value>Генератор мініатюр відео...</value>
   </data>
   <data name="tsmiTweetMessage.Text" xml:space="preserve">
-    <value>Повідомлення у Tweeter...</value>
+    <value>Повідомлення у Twitter...</value>
   </data>
   <data name="tsmiMonitorTest.Text" xml:space="preserve">
     <value>Тест монітора...</value>
@@ -670,7 +670,7 @@
     <value>Генератор мініатюр відео...</value>
   </data>
   <data name="tsmiTrayTweetMessage.Text" xml:space="preserve">
-    <value>Повідомлення у Tweeter...</value>
+    <value>Повідомлення у Twitter...</value>
   </data>
   <data name="tsmiTrayMonitorTest.Text" xml:space="preserve">
     <value>Тест монітора...</value>
