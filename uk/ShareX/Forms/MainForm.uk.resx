@@ -771,4 +771,16 @@
   <data name="btnCloseNews.Text" xml:space="preserve">
     <value>Закрити</value>
   </data>
+  <data name="tsbTwitter.ToolTipText" xml:space="preserve">
+    <value>Слідкуйте за нашим Twitter</value>
+  </data>
+  <data name="tsbDiscord.ToolTipText" xml:space="preserve">
+    <value>Приєднуйтесь до нашого Discord</value>
+  </data>
+  <data name="tsbPatreon.ToolTipText" xml:space="preserve">
+    <value>Підтримайте нас про Patreon</value>
+  </data>
+  <data name="tsbBitcoin.ToolTipText" xml:space="preserve">
+    <value>Підтримайте нас з допомогою криптовалют</value>
+  </data>
 </root>
