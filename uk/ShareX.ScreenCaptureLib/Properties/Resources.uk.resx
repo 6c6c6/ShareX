@@ -140,6 +140,12 @@
   <data name="RectangleLight_InitializeComponent_Rectangle_capture_light" xml:space="preserve">
     <value>Прямокутне захоплення з підсвічуванням</value>
   </data>
+  <data name="ShapeManager_CreateToolbar_SaveImage" xml:space="preserve">
+    <value>Зберегти зображення</value>
+  </data>
+  <data name="ShapeManager_CreateToolbar_SaveImageAs" xml:space="preserve">
+    <value>Зберегти зображення як...</value>
+  </data>
   <data name="FFmpegOptionsForm_DownloaderForm_InstallRequested_Successfully_downloaded_FFmpeg_" xml:space="preserve">
     <value>FFmpeg вдало завантажено.</value>
   </data>
