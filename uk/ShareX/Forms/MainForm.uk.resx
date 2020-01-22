@@ -264,6 +264,9 @@
   <data name="tsmiImageThumbnailer.Text" xml:space="preserve">
     <value>Генератор мініатюр зображень...</value>
   </data>
+  <data name="tsmiVideoConverter.Text" xml:space="preserve">
+    <value>Конвертер відео...</value>
+  </data>
   <data name="tsmiVideoThumbnailer.Text" xml:space="preserve">
     <value>Генератор мініатюр відео...</value>
   </data>
@@ -666,6 +669,9 @@
   <data name="tsmiTrayImageThumbnailer.Text" xml:space="preserve">
     <value>Генератор мініатюр зображень...</value>
   </data>
+  <data name="tsmiTrayVideoConverter.Text" xml:space="preserve">
+    <value>Конвертер відео...</value>
+  </data>
   <data name="tsmiTrayVideoThumbnailer.Text" xml:space="preserve">
     <value>Генератор мініатюр відео...</value>
   </data>
@@ -782,5 +788,8 @@
   </data>
   <data name="tsbBitcoin.ToolTipText" xml:space="preserve">
     <value>Підтримайте нас з допомогою криптовалют</value>
+  </data>
+  <data name="tsbGitHub.ToolTipText" xml:space="preserve">
+    <value>Зірку нашому GitHub</value>
   </data>
 </root>
