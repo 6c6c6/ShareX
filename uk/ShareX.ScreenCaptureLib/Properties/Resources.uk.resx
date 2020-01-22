@@ -117,16 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ShapeManager_CreateToolbar_CancelTaskEsc" xml:space="preserve">
+    <value>Скасування завдання (Esc)</value>
+  </data>
+  <data name="ShapeManager_CreateToolbar_UploadImage" xml:space="preserve">
+    <value>Вивантажити зображення</value>
+  </data>
+  <data name="ShapeManager_CreateContextMenu_Highlight_color___" xml:space="preserve">
+    <value>Колір підсвічування...</value>
+  </data>
   <data name="RectangleRegion_GetRulerText_Ruler_info" xml:space="preserve">
     <value>X: {0} / Y: {1} / X2: {2} / Y2: {3}
 Ширина: {4} пікс. / Висота: {5} пікс.
 Відстань: {6:0.00} пікс. / Кут: {7:0.00}°</value>
   </data>
+  <data name="ShapeManager_CreateToolbar_FlipHorizontal" xml:space="preserve">
+    <value>Віддзеркалити по горизонталі</value>
+  </data>
   <data name="WebpageCaptureForm_UpdateControls_Stop" xml:space="preserve">
     <value>Stop</value>
   </data>
+  <data name="ShapeManager_CreateContextMenu_Multi_region_mode" xml:space="preserve">
+    <value>Захоплення кількох областей</value>
+  </data>
+  <data name="ShapeManager_CreateToolbar_UseLetters" xml:space="preserve">
+    <value>Використовувати літери</value>
+  </data>
+  <data name="ShapeManager_CreateToolbar_StartingStepValue" xml:space="preserve">
+    <value>Значення на першому кроці:</value>
+  </data>
+  <data name="ShapeManager_CreateToolbar_ImageSize" xml:space="preserve">
+    <value>Розмір зображення...</value>
+  </data>
   <data name="ShapeManager_CreateToolbar_Delete" xml:space="preserve">
     <value>Видалити</value>
+  </data>
+  <data name="ShapeManager_CreateToolbar_ApplyChangesContinueTaskEnter" xml:space="preserve">
+    <value>Застосувати зміни та продовжити завдання (Enter)</value>
   </data>
   <data name="ShapeManager_CreateToolbar_Edit" xml:space="preserve">
     <value>Змінити</value>
