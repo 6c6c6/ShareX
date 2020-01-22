@@ -120,6 +120,12 @@
   <data name="nudXvidQscale.ToolTip" xml:space="preserve">
     <value>При 1 буде найкраща якість і найбільший розмір файлу, при 31 — найгірша якість і найменший розмір.</value>
   </data>
+  <data name="tbVorbis_qscale.ToolTip" xml:space="preserve">
+    <value>Діапазон 0–10, де 10 — найякісніше. 3–6 — гарний діапазон для спроб. Типово — 3.</value>
+  </data>
+  <data name="tbMP3_qscale.ToolTip" xml:space="preserve">
+    <value>Діапазон 0–9, де менше значення має вищу якість. 0–3, як правило, забезпечують прозорі результати, 4 (типово) — близьке до прозорості сприйняття, а 6 забезпечує «прийнятну» якість.</value>
+  </data>
   <data name="tbAACBitrate.ToolTip" xml:space="preserve">
     <value>Типово 128k.</value>
   </data>
@@ -128,6 +134,13 @@
   </data>
   <data name="cbGIFDither.ToolTip" xml:space="preserve">
     <value>Типово sierra2_4a.</value>
+  </data>
+  <data name="pbAudioCodecWarning.ToolTip" xml:space="preserve">
+    <value>Цей аудіокодек не підтримується вибраним відеоконтейнером.</value>
+  </data>
+  <data name="pbx264PresetWarning.ToolTip" xml:space="preserve">
+    <value>Для кодування у реальному часі, штибу запису екрану, варто вибирати якнайшвидший шаблон.
+В іншому випадку він може відставати та губити кадри.</value>
   </data>
   <data name="tbOpusBitrate.ToolTip" xml:space="preserve">
     <value>Типово 128k.</value>
@@ -218,6 +231,9 @@
   </data>
   <data name="lblAudioCodec.Text" xml:space="preserve">
     <value>Аудіо-кодек:</value>
+  </data>
+  <data name="lblHelperDevices.Text" xml:space="preserve">
+    <value>Встановлює джерела відео/аудіо «screen-capture-recorder» і «virtual-audio-capturer».</value>
   </data>
   <data name="btnInstallHelperDevices.Text" xml:space="preserve">
     <value>Встановити пристрої запису</value>
