@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="chFilename.Text" xml:space="preserve">
-    <value>Назва файла</value>
+    <value>Назва файлу</value>
   </data>
   <data name="chStatus.Text" xml:space="preserve">
     <value>Стан</value>
@@ -340,7 +340,7 @@
     <value>Перевірка вивантаження тексту</value>
   </data>
   <data name="tsmiTestFileUpload.Text" xml:space="preserve">
-    <value>Перевірка вивантаження файла</value>
+    <value>Перевірка вивантаження файлу</value>
   </data>
   <data name="tsmiTestURLShortener.Text" xml:space="preserve">
     <value>Перевірка скорочення посилання</value>
@@ -445,13 +445,13 @@
     <value>Позначити зображення з посиланням</value>
   </data>
   <data name="tsmiCopyFilePath.Text" xml:space="preserve">
-    <value>Шлях до файла</value>
+    <value>Шлях до файлу</value>
   </data>
   <data name="tsmiCopyFileName.Text" xml:space="preserve">
-    <value>Назва файла</value>
+    <value>Назва файлу</value>
   </data>
   <data name="tsmiCopyFileNameWithExtension.Text" xml:space="preserve">
-    <value>Назва файла з розширенням</value>
+    <value>Назва файлу з розширенням</value>
   </data>
   <data name="tsmiCopyFolder.Text" xml:space="preserve">
     <value>Теку</value>
@@ -745,7 +745,7 @@
     <value>Перевірити вивантаження тексту</value>
   </data>
   <data name="tsmiTrayTestFileUpload.Text" xml:space="preserve">
-    <value>Перевірити вивантаження файла</value>
+    <value>Перевірити вивантаження файлу</value>
   </data>
   <data name="tsmiTrayTestURLShortener.Text" xml:space="preserve">
     <value>Перевірити скорочення посилання</value>
