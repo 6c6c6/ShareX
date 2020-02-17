@@ -2,7 +2,7 @@
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
-    Copyright (c) 2007-2019 ShareX Team
+    Copyright (c) 2007-2020 ShareX Team
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -1808,8 +1808,7 @@ namespace ShareX
         {
             if (Program.Settings.DisableUpload)
             {
-                // TODO: Translate
-                MessageBox.Show("This feature will not work when \"DisableUpload\" option is enabled!", "ShareX",
+                MessageBox.Show(Resources.ThisFeatureWillNotWorkWhenDisableUploadOptionIsEnabled, "ShareX",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return false;

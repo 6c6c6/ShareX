@@ -2,7 +2,7 @@
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
-    Copyright (c) 2007-2019 ShareX Team
+    Copyright (c) 2007-2020 ShareX Team
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -87,9 +87,8 @@ namespace ShareX.UploadersLib
 
             AddIconToTabs();
 
-            ttlvMain.ImageList = uploadersImageList;
-            ttlvMain.MainTabControl = tcUploaders;
-            ttlvMain.FocusListView();
+            tttvMain.ImageList = uploadersImageList;
+            tttvMain.MainTabControl = tcUploaders;
 
             CodeMenu.Create<CodeMenuEntryFilename>(txtDropboxPath, CodeMenuEntryFilename.n, CodeMenuEntryFilename.t, CodeMenuEntryFilename.pn);
             CodeMenu.Create<CodeMenuEntryFilename>(txtAmazonS3ObjectPrefix, CodeMenuEntryFilename.n, CodeMenuEntryFilename.t, CodeMenuEntryFilename.pn);
@@ -111,6 +110,8 @@ namespace ShareX.UploadersLib
         {
             uploadersImageList = new ImageList();
             uploadersImageList.ColorDepth = ColorDepth.Depth32Bit;
+
+            uploadersImageList.Images.Add(Resources.navigation_270_button_white);
 
             foreach (IUploaderService uploaderService in UploaderFactory.AllServices)
             {
@@ -143,7 +144,7 @@ namespace ShareX.UploadersLib
         {
             if (tp != null)
             {
-                ttlvMain.NavigateToTabPage(tp);
+                tttvMain.NavigateToTabPage(tp);
             }
         }
 

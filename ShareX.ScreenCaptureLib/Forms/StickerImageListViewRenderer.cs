@@ -2,7 +2,7 @@
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
-    Copyright (c) 2007-2019 ShareX Team
+    Copyright (c) 2007-2020 ShareX Team
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -43,7 +43,7 @@ namespace ShareX.ScreenCaptureLib
             ImageListView.Colors.SelectedColor1 = ImageListView.Colors.HoverColor1 = ImageListView.Colors.UnFocusedColor1 = Color.FromArgb(252, 221, 132);
             ImageListView.Colors.SelectedColor2 = ImageListView.Colors.HoverColor2 = ImageListView.Colors.UnFocusedColor2 = Color.Transparent;
 
-            if (ShareXResources.ExperimentalDarkTheme)
+            if (ShareXResources.ExperimentalCustomTheme)
             {
                 ImageListView.BackColor = ShareXResources.Theme.BackgroundColor;
                 ImageListView.Colors.BackColor = ShareXResources.Theme.LightBackgroundColor;

@@ -2,7 +2,7 @@
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
-    Copyright (c) 2007-2019 ShareX Team
+    Copyright (c) 2007-2020 ShareX Team
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -56,7 +56,7 @@ namespace ShareX
         {
             RunPuushTasks();
 
-            NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.UseDarkTheme);
+            NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.UseCustomTheme && ShareXResources.Theme.IsDarkTheme);
             UpdateControls();
 
             DebugHelper.WriteLine("Startup time: {0} ms", Program.StartTimer.ElapsedMilliseconds);
@@ -156,7 +156,7 @@ namespace ShareX
                 tsmiShareSelectedURL.DropDownItems.Add(tsmi);
             }
 
-            lvUploads.SupportDarkTheme();
+            lvUploads.SupportCustomTheme();
 
             ImageList il = new ImageList();
             il.ColorDepth = ColorDepth.Depth32Bit;
@@ -793,22 +793,22 @@ namespace ShareX
             }
 
             ShareXResources.Theme = Program.Settings.Themes[Program.Settings.SelectedTheme];
-            ShareXResources.UseDarkTheme = Program.Settings.UseDarkTheme;
-            ShareXResources.ExperimentalDarkTheme = Program.Settings.ExperimentalDarkTheme;
+            ShareXResources.UseCustomTheme = Program.Settings.UseCustomTheme;
+            ShareXResources.ExperimentalCustomTheme = Program.Settings.ExperimentalCustomTheme;
 
             if (IsHandleCreated)
             {
-                NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.UseDarkTheme);
+                NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.UseCustomTheme && ShareXResources.Theme.IsDarkTheme);
             }
 
-            if (ShareXResources.UseDarkTheme)
+            if (ShareXResources.UseCustomTheme)
             {
                 tsMain.Renderer = new ToolStripDarkRenderer();
                 tsMain.DrawCustomBorder = false;
                 tsSocialButtons.Renderer = new ToolStripDarkRenderer();
                 tsSocialButtons.DrawCustomBorder = false;
-                ShareXResources.ApplyDarkThemeToContextMenuStrip(cmsTray);
-                ShareXResources.ApplyDarkThemeToContextMenuStrip(cmsTaskInfo);
+                ShareXResources.ApplyCustomThemeToContextMenuStrip(cmsTray);
+                ShareXResources.ApplyCustomThemeToContextMenuStrip(cmsTaskInfo);
                 ttMain.BackColor = ShareXResources.Theme.BackgroundColor;
                 ttMain.ForeColor = ShareXResources.Theme.TextColor;
                 lvUploads.BackColor = ShareXResources.Theme.BackgroundColor;
@@ -822,13 +822,13 @@ namespace ShareX
                 btnCloseNews.ForeColor = ShareXResources.Theme.TextColor;
                 btnCloseNews.BackColor = ShareXResources.Theme.LightBackgroundColor;
 
-                if (ColorHelpers.IsLightColor(ShareXResources.Theme.BackgroundColor))
+                if (ShareXResources.Theme.IsDarkTheme)
                 {
-                    tsbGitHub.Image = Resources.GitHub_Black_32x32;
+                    tsbGitHub.Image = Resources.GitHub_White_32x32;
                 }
                 else
                 {
-                    tsbGitHub.Image = Resources.GitHub_White_32x32;
+                    tsbGitHub.Image = Resources.GitHub_Black_32x32;
                 }
             }
             else

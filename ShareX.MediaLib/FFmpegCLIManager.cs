@@ -2,7 +2,7 @@
 
 /*
     ShareX - A program that allows you to take screenshots and share any file type
-    Copyright (c) 2007-2019 ShareX Team
+    Copyright (c) 2007-2020 ShareX Team
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -24,6 +24,7 @@
 #endregion License Information (GPL v3)
 
 using ShareX.HelpersLib;
+using ShareX.MediaLib.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -92,8 +93,7 @@ namespace ShareX.MediaLib
             bool result = errorCode == 0;
             if (!result && ShowError)
             {
-                // TODO: Translate
-                using (OutputBox outputBox = new OutputBox(Output.ToString(), "FFmpeg error"))
+                using (OutputBox outputBox = new OutputBox(Output.ToString(), Resources.FFmpegError))
                 {
                     outputBox.ShowDialog();
                 }
