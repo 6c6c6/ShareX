@@ -249,6 +249,9 @@
   <data name="cbExportSettings.Text" xml:space="preserve">
     <value>Настройки</value>
   </data>
+  <data name="lblExportImportNote.Text" xml:space="preserve">
+    <value>Примечание: не делитесь экспортированным файлом с кем-либо, потому что он может содержать личную информацию, такую как учетные записи и историю загрузок.</value>
+  </data>
   <data name="btnResetSettings.Text" xml:space="preserve">
     <value>Сбросить настройки...</value>
   </data>
