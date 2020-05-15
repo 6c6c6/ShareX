@@ -122,11 +122,11 @@ namespace ShareX
         {
             if (!string.IsNullOrEmpty(filePath))
             {
-                using (Image img = ImageHelpers.LoadImage(filePath))
+                using (Bitmap bmp = ImageHelpers.LoadImage(filePath))
                 {
-                    if (img != null)
+                    if (bmp != null)
                     {
-                        DecodeImage((Bitmap)img);
+                        DecodeImage(bmp);
                     }
                 }
             }
@@ -194,8 +194,8 @@ namespace ShareX
         {
             if (pbQRCode.Image != null)
             {
-                Image img = (Image)pbQRCode.Image.Clone();
-                UploadManager.UploadImage(img);
+                Bitmap bmp = (Bitmap)pbQRCode.Image.Clone();
+                UploadManager.UploadImage(bmp);
             }
         }
 
@@ -218,11 +218,11 @@ namespace ShareX
 
                 TaskSettings taskSettings = TaskSettings.GetDefaultTaskSettings();
 
-                using (Image img = RegionCaptureTasks.GetRegionImage(taskSettings.CaptureSettings.SurfaceOptions))
+                using (Bitmap bmp = RegionCaptureTasks.GetRegionImage(taskSettings.CaptureSettings.SurfaceOptions))
                 {
-                    if (img != null)
+                    if (bmp != null)
                     {
-                        DecodeImage((Bitmap)img);
+                        DecodeImage(bmp);
                     }
                 }
             }

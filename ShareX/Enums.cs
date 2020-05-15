@@ -65,6 +65,8 @@ namespace ShareX
         MexicanSpanish,
         [Description("فارسی (Persian)")]
         Persian,
+        [Description("Português (Portuguese)")]
+        Portuguese,
         [Description("Português-Brasil (Portuguese-Brazil)")]
         PortugueseBrazil,
         [Description("Русский (Russian)")]
@@ -211,6 +213,9 @@ namespace ShareX
         Ruler,
         IndexFolder,
         ImageCombiner,
+        ImageSplitter,
+        ImageThumbnailer,
+        VideoConverter,
         VideoThumbnailer,
         TweetMessage,
         MonitorTest,

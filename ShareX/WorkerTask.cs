@@ -42,7 +42,7 @@ namespace ShareX
     public class WorkerTask : IDisposable
     {
         public delegate void TaskEventHandler(WorkerTask task);
-        public delegate void TaskImageEventHandler(WorkerTask task, Image image);
+        public delegate void TaskImageEventHandler(WorkerTask task, Bitmap image);
         public delegate void UploaderServiceEventHandler(IUploaderService uploaderService);
 
         public event TaskEventHandler StatusChanged, UploadStarted, UploadProgressChanged, UploadCompleted, TaskCompleted;
@@ -57,7 +57,7 @@ namespace ShareX
         public bool RequestSettingUpdate { get; private set; }
         public bool EarlyURLCopied { get; private set; }
         public Stream Data { get; private set; }
-        public Image Image { get; private set; }
+        public Bitmap Image { get; private set; }
         public bool KeepImage { get; set; }
         public string Text { get; private set; }
 
@@ -614,7 +614,7 @@ namespace ShareX
 
                 if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.SaveImageToFile))
                 {
-                    string filePath = TaskHelpers.HandleExistsFile(Info.TaskSettings.CaptureFolder, Info.FileName, Info.TaskSettings);
+                    string filePath = TaskHelpers.HandleExistsFile(Info.TaskSettings.GetScreenshotsFolder(), Info.FileName, Info.TaskSettings);
 
                     if (!string.IsNullOrEmpty(filePath))
                     {
@@ -636,7 +636,7 @@ namespace ShareX
                         }
                         else
                         {
-                            initialDirectory = Info.TaskSettings.CaptureFolder;
+                            initialDirectory = Info.TaskSettings.GetScreenshotsFolder();
                         }
 
                         bool imageSaved;
@@ -680,7 +680,7 @@ namespace ShareX
                     else
                     {
                         thumbnailFilename = Info.FileName;
-                        thumbnailFolder = Info.TaskSettings.CaptureFolder;
+                        thumbnailFolder = Info.TaskSettings.GetScreenshotsFolder();
                     }
 
                     Info.ThumbnailFilePath = TaskHelpers.CreateThumbnail(Image, thumbnailFolder, thumbnailFilename, Info.TaskSettings);
@@ -744,7 +744,7 @@ namespace ShareX
         {
             if (Info.TaskSettings.AdvancedSettings.TextTaskSaveAsFile)
             {
-                string filePath = TaskHelpers.HandleExistsFile(Info.TaskSettings.CaptureFolder, Info.FileName, Info.TaskSettings);
+                string filePath = TaskHelpers.HandleExistsFile(Info.TaskSettings.GetScreenshotsFolder(), Info.FileName, Info.TaskSettings);
 
                 if (!string.IsNullOrEmpty(filePath))
                 {
@@ -986,7 +986,7 @@ namespace ShareX
         {
             string url = Info.Result.URL.Trim();
             Info.Result.URL = "";
-            Info.FilePath = TaskHelpers.HandleExistsFile(Info.TaskSettings.CaptureFolder, Info.FileName, Info.TaskSettings);
+            Info.FilePath = TaskHelpers.HandleExistsFile(Info.TaskSettings.GetScreenshotsFolder(), Info.FileName, Info.TaskSettings);
 
             if (!string.IsNullOrEmpty(Info.FilePath))
             {
@@ -1071,11 +1071,11 @@ namespace ShareX
         {
             if (ImageReady != null)
             {
-                Image image = null;
+                Bitmap image = null;
 
                 if (Program.Settings.TaskViewMode == TaskViewMode.ThumbnailView && Image != null)
                 {
-                    image = (Image)Image.Clone();
+                    image = (Bitmap)Image.Clone();
                 }
 
                 threadWorker.InvokeAsync(() =>

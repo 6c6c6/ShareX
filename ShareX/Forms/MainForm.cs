@@ -44,8 +44,10 @@ namespace ShareX
         public bool IsReady { get; private set; }
 
         private bool forceClose, trayMenuSaveSettings = true;
+        private int trayClickCount = 0;
         private UploadInfoManager uim;
         private ToolStripDropDownItem tsmiImageFileUploaders, tsmiTrayImageFileUploaders, tsmiTextFileUploaders, tsmiTrayTextFileUploaders;
+        private ImageFilesCache actionsMenuIconCache = new ImageFilesCache();
 
         public MainForm()
         {
@@ -56,7 +58,7 @@ namespace ShareX
         {
             RunPuushTasks();
 
-            NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.UseCustomTheme && ShareXResources.Theme.IsDarkTheme);
+            NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.IsDarkTheme);
             UpdateControls();
 
             DebugHelper.WriteLine("Startup time: {0} ms", Program.StartTimer.ElapsedMilliseconds);
@@ -555,7 +557,7 @@ namespace ShareX
             }
         }
 
-        private void AddMultiEnumItems<T>(Action<T> selectedEnum, params ToolStripDropDownItem[] parents)
+        private void AddMultiEnumItems<T>(Action<T> selectedEnum, params ToolStripDropDownItem[] parents) where T : Enum
         {
             string[] enums = Helpers.GetLocalizedEnumDescriptions<T>().Skip(1).ToArray();
 
@@ -798,7 +800,7 @@ namespace ShareX
 
             if (IsHandleCreated)
             {
-                NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.UseCustomTheme && ShareXResources.Theme.IsDarkTheme);
+                NativeMethods.UseImmersiveDarkMode(Handle, ShareXResources.IsDarkTheme);
             }
 
             if (ShareXResources.UseCustomTheme)
@@ -821,15 +823,6 @@ namespace ShareX
                 btnCloseNews.FlatAppearance.BorderColor = ShareXResources.Theme.BorderColor;
                 btnCloseNews.ForeColor = ShareXResources.Theme.TextColor;
                 btnCloseNews.BackColor = ShareXResources.Theme.LightBackgroundColor;
-
-                if (ShareXResources.Theme.IsDarkTheme)
-                {
-                    tsbGitHub.Image = Resources.GitHub_White_32x32;
-                }
-                else
-                {
-                    tsbGitHub.Image = Resources.GitHub_Black_32x32;
-                }
             }
             else
             {
@@ -852,7 +845,41 @@ namespace ShareX
                 btnCloseNews.FlatAppearance.BorderColor = SystemColors.ControlText;
                 btnCloseNews.ForeColor = SystemColors.ControlText;
                 btnCloseNews.BackColor = SystemColors.Window;
+            }
+
+            if (ShareXResources.IsDarkTheme)
+            {
+                tsbGitHub.Image = Resources.GitHub_White_32x32;
+                tsmiQRCode.Image = Resources.barcode_2d_white;
+                tsmiTrayQRCode.Image = Resources.barcode_2d_white;
+                tsmiShowQRCode.Image = Resources.barcode_2d_white;
+                tsmiTextCapture.Image = Resources.edit_drop_cap_white;
+                tsmiTrayTextCapture.Image = Resources.edit_drop_cap_white;
+                tsmiOCRImage.Image = Resources.edit_drop_cap_white;
+                tsmiShortenURL.Image = Resources.edit_scale_white;
+                tsmiTrayShortenURL.Image = Resources.edit_scale_white;
+                tsmiURLShorteners.Image = Resources.edit_scale_white;
+                tsmiTrayURLShorteners.Image = Resources.edit_scale_white;
+                tsmiTestURLShortener.Image = Resources.edit_scale_white;
+                tsmiTrayTestURLShortener.Image = Resources.edit_scale_white;
+                tsmiShortenSelectedURL.Image = Resources.edit_scale_white;
+            }
+            else
+            {
                 tsbGitHub.Image = Resources.GitHub_Black_32x32;
+                tsmiQRCode.Image = Resources.barcode_2d;
+                tsmiTrayQRCode.Image = Resources.barcode_2d;
+                tsmiShowQRCode.Image = Resources.barcode_2d;
+                tsmiTextCapture.Image = Resources.edit_drop_cap;
+                tsmiTrayTextCapture.Image = Resources.edit_drop_cap;
+                tsmiOCRImage.Image = Resources.edit_drop_cap;
+                tsmiShortenURL.Image = Resources.edit_scale;
+                tsmiTrayShortenURL.Image = Resources.edit_scale;
+                tsmiURLShorteners.Image = Resources.edit_scale;
+                tsmiTrayURLShorteners.Image = Resources.edit_scale;
+                tsmiTestURLShortener.Image = Resources.edit_scale;
+                tsmiTrayTestURLShortener.Image = Resources.edit_scale;
+                tsmiShortenSelectedURL.Image = Resources.edit_scale;
             }
 
             pbPreview.UpdateTheme();
@@ -896,13 +923,8 @@ namespace ShareX
 
                         try
                         {
-                            using (Icon icon = NativeMethods.GetFileIcon(action.GetFullPath(), true))
-                            {
-                                if (icon != null && icon.Width > 0 && icon.Height > 0)
-                                {
-                                    tsmi.Image = icon.ToBitmap();
-                                }
-                            }
+                            string actionFilePath = action.GetFullPath();
+                            tsmi.Image = actionsMenuIconCache.GetFileIconAsImage(actionFilePath);
                         }
                         catch (Exception e)
                         {
@@ -2044,39 +2066,46 @@ namespace ShareX
 
         #region Tray events
 
-        private void timerTraySingleClick_Tick(object sender, EventArgs e)
+        private void niTray_MouseUp(object sender, MouseEventArgs e)
         {
-            timerTraySingleClick.Stop();
-            TaskHelpers.ExecuteJob(Program.Settings.TrayLeftClickAction);
-        }
-
-        private void niTray_MouseClick(object sender, MouseEventArgs e)
-        {
-            switch (e.Button)
+            if (e.Button == MouseButtons.Left)
             {
-                case MouseButtons.Left:
-                    if (Program.Settings.TrayLeftDoubleClickAction == HotkeyType.None)
-                    {
-                        TaskHelpers.ExecuteJob(Program.Settings.TrayLeftClickAction);
-                    }
-                    else
+                if (Program.Settings.TrayLeftDoubleClickAction == HotkeyType.None)
+                {
+                    TaskHelpers.ExecuteJob(Program.Settings.TrayLeftClickAction);
+                }
+                else
+                {
+                    trayClickCount++;
+
+                    if (trayClickCount == 1)
                     {
                         timerTraySingleClick.Interval = SystemInformation.DoubleClickTime;
                         timerTraySingleClick.Start();
                     }
-                    break;
-                case MouseButtons.Middle:
-                    TaskHelpers.ExecuteJob(Program.Settings.TrayMiddleClickAction);
-                    break;
+                    else
+                    {
+                        trayClickCount = 0;
+                        timerTraySingleClick.Stop();
+
+                        TaskHelpers.ExecuteJob(Program.Settings.TrayLeftDoubleClickAction);
+                    }
+                }
+            }
+            else if (e.Button == MouseButtons.Middle)
+            {
+                TaskHelpers.ExecuteJob(Program.Settings.TrayMiddleClickAction);
             }
         }
 
-        private void niTray_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void timerTraySingleClick_Tick(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (trayClickCount == 1)
             {
+                trayClickCount = 0;
                 timerTraySingleClick.Stop();
-                TaskHelpers.ExecuteJob(Program.Settings.TrayLeftDoubleClickAction);
+
+                TaskHelpers.ExecuteJob(Program.Settings.TrayLeftClickAction);
             }
         }
 
