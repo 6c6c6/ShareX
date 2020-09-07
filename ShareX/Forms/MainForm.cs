@@ -63,7 +63,7 @@ namespace ShareX
 
             DebugHelper.WriteLine("Startup time: {0} ms", Program.StartTimer.ElapsedMilliseconds);
 
-            UseCommandLineArgs(Program.CLI.Commands);
+            Program.CLI.UseCommandLineArgs();
 
             if (Program.Settings.ActionsToolbarRunAtStartup)
             {
@@ -314,13 +314,6 @@ namespace ShareX
             UpdateTaskViewMode();
 
             InitHotkeys();
-
-#if !WindowsStore
-            if (!Program.Portable && !IntegrationHelpers.CheckCustomUploaderExtension())
-            {
-                IntegrationHelpers.CreateCustomUploaderExtension(true);
-            }
-#endif
 
             IsReady = true;
         }
@@ -618,8 +611,8 @@ namespace ShareX
 
             tsmiStopUpload.Visible = tsmiOpen.Visible = tsmiCopy.Visible = tsmiShowErrors.Visible = tsmiShowResponse.Visible = tsmiSearchImage.Visible =
                 tsmiShowQRCode.Visible = tsmiOCRImage.Visible = tsmiCombineImages.Visible = tsmiUploadSelectedFile.Visible = tsmiDownloadSelectedURL.Visible =
-                tsmiEditSelectedFile.Visible = tsmiRunAction.Visible = tsmiDeleteSelectedItem.Visible = tsmiDeleteSelectedFile.Visible = tsmiShortenSelectedURL.Visible =
-                tsmiShareSelectedURL.Visible = false;
+                tsmiEditSelectedFile.Visible = tsmiAddImageEffects.Visible = tsmiRunAction.Visible = tsmiDeleteSelectedItem.Visible = tsmiDeleteSelectedFile.Visible =
+                tsmiShortenSelectedURL.Visible = tsmiShareSelectedURL.Visible = false;
 
             if (Program.Settings.TaskViewMode == TaskViewMode.ListView)
             {
@@ -726,6 +719,7 @@ namespace ShareX
                     tsmiUploadSelectedFile.Visible = uim.SelectedItem.IsFileExist;
                     tsmiDownloadSelectedURL.Visible = uim.SelectedItem.IsFileURL;
                     tsmiEditSelectedFile.Visible = uim.SelectedItem.IsImageFile;
+                    tsmiAddImageEffects.Visible = uim.SelectedItem.IsImageFile;
                     UpdateActionsMenu(uim.SelectedItem.Info.FilePath);
                     tsmiDeleteSelectedItem.Visible = true;
                     tsmiDeleteSelectedFile.Visible = uim.SelectedItem.IsFileExist;
@@ -796,7 +790,6 @@ namespace ShareX
 
             ShareXResources.Theme = Program.Settings.Themes[Program.Settings.SelectedTheme];
             ShareXResources.UseCustomTheme = Program.Settings.UseCustomTheme;
-            ShareXResources.ExperimentalCustomTheme = Program.Settings.ExperimentalCustomTheme;
 
             if (IsHandleCreated)
             {
@@ -833,6 +826,7 @@ namespace ShareX
                 cmsTray.Renderer = new ToolStripCustomRenderer();
                 cmsTray.Opacity = 1;
                 cmsTaskInfo.Renderer = new ToolStripCustomRenderer();
+                cmsTaskInfo.Opacity = 1;
                 ttMain.BackColor = SystemColors.Window;
                 ttMain.ForeColor = SystemColors.ControlText;
                 lvUploads.BackColor = SystemColors.Window;
@@ -955,9 +949,11 @@ namespace ShareX
             HelpersOptions.AcceptInvalidSSLCertificates = Program.Settings.AcceptInvalidSSLCertificates;
             HelpersOptions.URLEncodeIgnoreEmoji = Program.Settings.URLEncodeIgnoreEmoji;
             HelpersOptions.DefaultCopyImageFillBackground = Program.Settings.DefaultClipboardCopyImageFillBackground;
+            HelpersOptions.UseAlternativeClipboardCopyImage = Program.Settings.UseAlternativeClipboardCopyImage;
             HelpersOptions.RotateImageByExifOrientationData = Program.Settings.RotateImageByExifOrientationData;
             HelpersOptions.BrowserPath = Program.Settings.BrowserPath;
             HelpersOptions.RecentColors = Program.Settings.RecentColors;
+            Program.UpdateHelpersSpecialFolders();
 
             TaskManager.RecentManager.MaxCount = Program.Settings.RecentTasksMaxCount;
 
@@ -1050,92 +1046,6 @@ namespace ShareX
 
             tsmiURLSharingServices.Text = tsmiTrayURLSharingServices.Text = string.Format(Resources.TaskSettingsForm_UpdateUploaderMenuNames_URL_sharing_service___0_,
                 Program.DefaultTaskSettings.URLSharingServiceDestination.GetLocalizedDescription());
-        }
-
-        public void UseCommandLineArgs(List<CLICommand> commands)
-        {
-            TaskSettings taskSettings = FindCLITask(commands);
-
-            foreach (CLICommand command in commands)
-            {
-                DebugHelper.WriteLine("CommandLine: " + command.Command);
-
-                if (command.IsCommand && command.Command.Equals("CustomUploader", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    TaskHelpers.AddCustomUploader(command.Parameter);
-
-                    continue;
-                }
-
-                if (command.IsCommand && (CheckCLIHotkey(command) || CheckCLIWorkflow(command)))
-                {
-                    continue;
-                }
-
-                if (URLHelpers.IsValidURL(command.Command))
-                {
-                    UploadManager.DownloadAndUploadFile(command.Command, taskSettings);
-                }
-                else
-                {
-                    UploadManager.UploadFile(command.Command, taskSettings);
-                }
-            }
-        }
-
-        private bool CheckCLIHotkey(CLICommand command)
-        {
-            foreach (HotkeyType job in Helpers.GetEnums<HotkeyType>())
-            {
-                if (command.CheckCommand(job.ToString()))
-                {
-                    TaskHelpers.ExecuteJob(job, command);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool CheckCLIWorkflow(CLICommand command)
-        {
-            if (Program.HotkeysConfig != null && command.CheckCommand("workflow") && !string.IsNullOrEmpty(command.Parameter))
-            {
-                foreach (HotkeySettings hotkeySetting in Program.HotkeysConfig.Hotkeys)
-                {
-                    if (hotkeySetting.TaskSettings.Job != HotkeyType.None)
-                    {
-                        if (command.Parameter == hotkeySetting.TaskSettings.ToString())
-                        {
-                            TaskHelpers.ExecuteJob(hotkeySetting.TaskSettings);
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private TaskSettings FindCLITask(List<CLICommand> commands)
-        {
-            if (Program.HotkeysConfig != null)
-            {
-                CLICommand command = commands.FirstOrDefault(x => x.CheckCommand("task") && !string.IsNullOrEmpty(x.Parameter));
-
-                if (command != null)
-                {
-                    foreach (HotkeySettings hotkeySetting in Program.HotkeysConfig.Hotkeys)
-                    {
-                        if (command.Parameter == hotkeySetting.TaskSettings.ToString())
-                        {
-                            return hotkeySetting.TaskSettings;
-                        }
-                    }
-                }
-            }
-
-            return null;
         }
 
         private WorkerTask[] GetSelectedTasks()
@@ -2432,6 +2342,11 @@ namespace ShareX
         private void tsmiEditSelectedFile_Click(object sender, EventArgs e)
         {
             uim.EditImage();
+        }
+
+        private void tsmiAddImageEffects_Click(object sender, EventArgs e)
+        {
+            uim.AddImageEffects();
         }
 
         private void tsmiSearchImage_Click(object sender, EventArgs e)

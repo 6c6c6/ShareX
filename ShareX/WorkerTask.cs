@@ -283,6 +283,22 @@ namespace ShareX
             }
         }
 
+        public void ShowErrorWindow()
+        {
+            if (Info != null && Info.Result != null && Info.Result.IsError)
+            {
+                string errors = Info.Result.ErrorsToString();
+
+                if (!string.IsNullOrEmpty(errors))
+                {
+                    using (ErrorForm form = new ErrorForm(Resources.UploadInfoManager_ShowErrors_Upload_errors, errors, Program.LogsFilePath, Links.URL_ISSUES, false))
+                    {
+                        form.ShowDialog();
+                    }
+                }
+            }
+        }
+
         private void ThreadDoWork()
         {
             CreateTaskReferenceHelper();
@@ -575,7 +591,7 @@ namespace ShareX
 
             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.AddImageEffects))
             {
-                Image = TaskHelpers.AddImageEffects(Image, Info.TaskSettings.ImageSettingsReference);
+                Image = TaskHelpers.ApplyImageEffects(Image, Info.TaskSettings.ImageSettingsReference);
 
                 if (Image == null)
                 {
@@ -596,7 +612,7 @@ namespace ShareX
 
             if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.CopyImageToClipboard))
             {
-                ClipboardHelpers.CopyImage(Image);
+                ClipboardHelpers.CopyImage(Image, Info.FileName);
                 DebugHelper.WriteLine("Image copied to clipboard.");
             }
 
@@ -710,10 +726,15 @@ namespace ShareX
                             Data.Dispose();
                         }
 
+                        string fileName = Info.FileName;
+
                         foreach (ExternalProgram fileAction in actions)
                         {
                             Info.FilePath = fileAction.Run(Info.FilePath);
                         }
+
+                        string extension = Helpers.GetFilenameExtension(Info.FilePath);
+                        Info.FileName = Helpers.ChangeFilenameExtension(fileName, extension);
 
                         LoadFileStream();
                     }
@@ -735,7 +756,7 @@ namespace ShareX
 
                 if (Info.TaskSettings.AfterCaptureJob.HasFlag(AfterCaptureTasks.ScanQRCode) && Info.DataType == EDataType.Image)
                 {
-                    QRCodeForm.DecodeFile(Info.FilePath).ShowDialog();
+                    QRCodeForm.OpenFormDecodeFromFile(Info.FilePath).ShowDialog();
                 }
             }
         }

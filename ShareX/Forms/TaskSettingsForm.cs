@@ -24,7 +24,6 @@
 #endregion License Information (GPL v3)
 
 using ShareX.HelpersLib;
-using ShareX.ImageEffectsLib;
 using ShareX.Properties;
 using ShareX.ScreenCaptureLib;
 using ShareX.UploadersLib;
@@ -813,12 +812,7 @@ namespace ShareX
 
         private void btnImageEffects_Click(object sender, EventArgs e)
         {
-            using (ImageEffectsForm imageEffectsForm = new ImageEffectsForm(null, TaskSettings.ImageSettings.ImageEffectPresets,
-                TaskSettings.ImageSettings.SelectedImageEffectPreset))
-            {
-                imageEffectsForm.ShowDialog();
-                TaskSettings.ImageSettings.SelectedImageEffectPreset = imageEffectsForm.SelectedPresetIndex;
-            }
+            TaskHelpers.OpenImageEffectsSingleton(TaskSettings);
         }
 
         private void nudThumbnailWidth_ValueChanged(object sender, EventArgs e)

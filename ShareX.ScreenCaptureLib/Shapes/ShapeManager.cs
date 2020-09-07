@@ -1928,7 +1928,7 @@ namespace ShareX.ScreenCaptureLib
 
                     if (size != oldSize)
                     {
-                        InterpolationMode interpolationMode = GetInterpolationMode(Options.ImageEditorResizeInterpolationMode);
+                        InterpolationMode interpolationMode = ImageHelpers.GetInterpolationMode(Options.ImageEditorResizeInterpolationMode);
                         Bitmap bmp = ImageHelpers.ResizeImage(Form.Canvas, size, interpolationMode);
 
                         if (bmp != null)
@@ -1940,24 +1940,6 @@ namespace ShareX.ScreenCaptureLib
             }
 
             Form.Resume();
-        }
-
-        internal InterpolationMode GetInterpolationMode(ImageEditorInterpolationMode interpolationMode)
-        {
-            switch (interpolationMode)
-            {
-                default:
-                case ImageEditorInterpolationMode.HighQualityBicubic:
-                    return InterpolationMode.HighQualityBicubic;
-                case ImageEditorInterpolationMode.Bicubic:
-                    return InterpolationMode.Bicubic;
-                case ImageEditorInterpolationMode.HighQualityBilinear:
-                    return InterpolationMode.HighQualityBilinear;
-                case ImageEditorInterpolationMode.Bilinear:
-                    return InterpolationMode.Bilinear;
-                case ImageEditorInterpolationMode.NearestNeighbor:
-                    return InterpolationMode.NearestNeighbor;
-            }
         }
 
         private void ChangeCanvasSize()
@@ -2019,13 +2001,18 @@ namespace ShareX.ScreenCaptureLib
         private void AutoCropImage()
         {
             Rectangle source = new Rectangle(0, 0, Form.Canvas.Width, Form.Canvas.Height);
-            Rectangle rect = ImageHelpers.FindAutoCropRectangle(Form.Canvas);
+            Rectangle crop;
 
-            if (source != rect && rect.X >= 0 && rect.Y >= 0 && rect.Width > 0 && rect.Height > 0)
+            using (Bitmap resultImage = Form.GetResultImage())
+            {
+                crop = ImageHelpers.FindAutoCropRectangle(resultImage);
+            }
+
+            if (source != crop && crop.X >= 0 && crop.Y >= 0 && crop.Width > 0 && crop.Height > 0)
             {
                 CurrentTool = ShapeType.ToolCrop;
                 CropTool tool = (CropTool)CreateShape(ShapeType.ToolCrop);
-                tool.Rectangle = rect.LocationOffset(Form.CanvasRectangle.Location);
+                tool.Rectangle = crop.LocationOffset(Form.CanvasRectangle.Location);
                 tool.OnCreated();
                 AddShape(tool);
                 SelectCurrentShape();
